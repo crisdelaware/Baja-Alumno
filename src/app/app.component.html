@@ -7,19 +7,25 @@
   </div>
 </nav>
 
+<form [formGroup]="miFormularioBuscador" (ngSubmit)="buscar()">
 <div class="card m-3">
   <div class="card-header">
     Buscador...
   </div>
   <div class="card-body">
     <div class="row">
+      <!--  -->
+      
       <div class="col-5">
         <div class="row g-3 align-items-center">
           <div class="col-auto">
             <label class="col-form-label">Ingrese la Matricula</label>
           </div>
           <div class="col">
-            <input type="number" class="form-control" >
+            <input type="number" formControlName="matricula" required class="form-control" >
+          </div>
+          <div *ngIf="matricula?.invalid && (matricula?.dirty || matricula?.touched)" class="invalid-feedback">
+            Campo no valido
           </div>
         </div>
       </div>
@@ -29,132 +35,195 @@
             <label class="col-form-label">Seleccione el periodo</label>
           </div>
           <div class="col">
-            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-              <option selected>Periodo</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+            <select class="form-select" formControlName="periodo" required>
+              <option value="">Selecciona una opción</option>
+              <option value="1">Enero-Abril</option>
+              <option value="2">Mayo-Agosto</option>
+              <option value="3">Septiembre-Diciembre</option>
             </select>
+            <div *ngIf="periodo?.invalid && (periodo?.dirty || periodo?.touched)" class="invalid-feedback">
+              Por favor, selecciona una opción válida.
+            </div>
           </div>
         </div>
       </div>
       <div class="col">
-        <button class="btn btn-primary btn-block">
+        <button type="submit" class="btn btn-primary btn-block" [disabled]="miFormularioBuscador.invalid">
           Buscar
         </button>
       </div>
+    
+    <!--  -->
     </div>
   </div>
 </div>
+</form>
 
-<div class="m-3">
-  <div class="row row-cols-2">
-
-    <div class="col">
-      <div class="card">
-        <div class="card-header">
-          Informacion General
-        </div>
-        <div class="card-body">
-          <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">Alumno</label>
-            <div class="col-sm-10">
-              <input class="form-control" type="text" value="Cristian Omar Puentes Diaz" aria-label="readonly input example" readonly>
-            </div>
-          </div>
-          <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">Matricula</label>
-            <div class="col-sm-10">
-              <input class="form-control" type="text" value="170842" aria-label="readonly input example" readonly>
-            </div>
-          </div>
-          <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">Estado</label>
-            <div class="col-sm-10">
-              <input class="form-control" type="text" value="IN" aria-label="readonly input example" readonly>
-            </div>
-          </div>
-          <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">Grupo</label>
-            <div class="col-sm-10">
-              <input class="form-control" type="text" value="IDGS-11-C" aria-label="readonly input example" readonly>
-            </div>
-          </div>
-        </div>
-      </div>
+<!-- <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="select1">Select 1</label>
+    <select formControlName="select1" class="form-control" id="select1" required>
+      <option value="">Selecciona una opción</option>
+      <option value="opcion1">Opción 1</option>
+      <option value="opcion2">Opción 2</option>
+      <option value="opcion3">Opción 3</option>
+    </select>
+    <div *ngIf="select1?.invalid && (select1?.dirty || select1?.touched)" class="invalid-feedback">
+      Por favor, selecciona una opción válida.
     </div>
-
-    <div class="col">
-      <div class="card">
-        <div class="card-header">
-          II-Acciones del Orientador
-        </div>
-        <div class="card-body">
-          <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">Tipo</label>
-            <div class="col-sm-10">
-              <select class="form-select" aria-label="Default select example">
-                <option selected>Seleccione una opcion</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-            </div>
-            <button class="btn btn-warning mt-4 justify-content-md-end">
-              Comenzar Proceso de Baja
-            </button>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="col mt-3">
-      <div class="card">
-        <div class="card-header">
-          I-Baja Alumno
-        </div>
-        <div class="card-body">
-          <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">Tipo</label>
-            <div class="col-sm-10">
-              <select class="form-select" aria-label="Default select example">
-                <option selected>Seleccione una opcion</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-            </div>
-          </div>
-          <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">Causa</label>
-            <div class="col-sm-10">
-              <select class="form-select" aria-label="Default select example">
-                <option selected>Seleccione una opcion</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-            </div>
-          </div>
-          <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">Motivo</label>
-            <div class="col-sm-10">
-              <select class="form-select" aria-label="Default select example">
-                <option selected>Seleccione una opcion</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-
-    </div>
-
   </div>
-</div>
+
+  <div class="form-group">
+    <label for="select2">Select 2</label>
+    <select formControlName="select2" class="form-control" id="select2" required>
+      <option value="">Selecciona una opción</option>
+      <option value="opcion1">Opción 1</option>
+      <option value="opcion2">Opción 2</option>
+      <option value="opcion3">Opción 3</option>
+    </select>
+    <div *ngIf="select2?.invalid && (select2?.dirty || select2?.touched)" class="invalid-feedback">
+      Por favor, selecciona una opción válida.
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Enviar</button>
+</form> -->
+
+
+<ng-container *ngIf="miFormularioBuscador.valid">
+
+
+
+
+  <div class="m-3">
+    <div class="row row-cols-2">
+  
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            Informacion General
+          </div>
+          <div class="card-body">
+            <div class="mb-3 row">
+              <label class="col-sm-2 col-form-label">Alumno</label>
+              <div class="col-sm-10">
+                <input class="form-control" type="text" value="Cristian Omar Puentes Diaz" aria-label="readonly input example" readonly>
+              </div>
+            </div>
+            <div class="mb-3 row">
+              <label class="col-sm-2 col-form-label">Matricula</label>
+              <div class="col-sm-10">
+                <input class="form-control" type="text" value="170842" aria-label="readonly input example" readonly>
+              </div>
+            </div>
+            <div class="mb-3 row">
+              <label class="col-sm-2 col-form-label">Estado</label>
+              <div class="col-sm-10">
+                <input class="form-control" type="text" value="IN" aria-label="readonly input example" readonly>
+              </div>
+            </div>
+            <div class="mb-3 row">
+              <label class="col-sm-2 col-form-label">Grupo</label>
+              <div class="col-sm-10">
+                <input class="form-control" type="text" value="IDGS-11-C" aria-label="readonly input example" readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <form [formGroup]="miFormularioAccionesOrientador">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            II-Acciones del Orientador
+          </div>
+          <div class="card-body">
+            <div class="mb-3 row">
+              <label class="col-sm-2 col-form-label">Tipo</label>
+              <div class="col-sm-10">
+                <select class="form-select" formControlName="acciones">
+                  <option value="">Seleccione una opcion</option>
+                  <option value="1">Accion 1</option>
+                  <option value="2">Accion 2</option>
+                  <option value="3">Accion 3</option>
+                </select>
+                <div *ngIf="acciones?.invalid && (acciones?.dirty || acciones?.touched)" class="invalid-feedback">
+                  Por favor, selecciona una opción válida.
+                </div>
+              </div>
+              <button type="submit" class="btn btn-warning mt-4 justify-content-md-end" (click)="baja()" [disabled]="miFormularioAccionesOrientador.invalid && miFormularioBaja.invalid">
+                Comenzar Proceso de Baja
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  
+
+    <form [formGroup]="miFormularioBaja">
+      <div class="col mt-3">
+        <div class="card">
+          <div class="card-header">
+            I-Baja Alumno
+          </div>
+          <div class="card-body">
+            <div class="mb-3 row">
+              <label class="col-sm-2 col-form-label">Tipo</label>
+              <div class="col-sm-10">
+                <select class="form-select" formControlName="tipo" aria-label="Default select example">
+                  <option value="">Seleccione una opcion</option>
+                  <option value="1">Tipo 1</option>
+                  <option value="2">Tipo 2</option>
+                  <option value="3">Tipo 3</option>
+                </select>
+                <div *ngIf="tipo?.invalid && (tipo?.dirty || tipo?.touched)" class="invalid-feedback">
+                  Por favor, selecciona una opción válida.
+                </div>
+              </div>
+            </div>
+            <div class="mb-3 row">
+              <label class="col-sm-2 col-form-label">Causa</label>
+              <div class="col-sm-10">
+                <select class="form-select" formControlName="causa" aria-label="Default select example">
+                  <option value="">Seleccione una opcion</option>
+                  <option value="1">Causa 1</option>
+                  <option value="2">Causa 2</option>
+                  <option value="3">Causa 3</option>
+                </select>
+                <div *ngIf="causa?.invalid && (causa?.dirty || causa?.touched)" class="invalid-feedback">
+                  Por favor, selecciona una opción válida.
+                </div>
+              </div>
+            </div>
+            <div class="mb-3 row">
+              <label class="col-sm-2 col-form-label">Motivo</label>
+              <div class="col-sm-10">
+                <select class="form-select" formControlName="motivo" aria-label="Default select example">
+                  <option value="">Seleccione una opcion</option>
+                  <option value="1">Motivo 1</option>
+                  <option value="2">Motivo 2</option>
+                  <option value="3">Motivo 3</option>
+                </select>
+                <div *ngIf="motivo?.invalid && (motivo?.dirty || motivo?.touched)" class="invalid-feedback">
+                  Por favor, selecciona una opción válida.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+      <div class="col">
+  
+      </div>
+  
+    </div>
+    
+  </div>
+  
+
+</ng-container>
+
+
